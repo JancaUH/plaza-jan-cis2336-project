@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ArtConnect - Home</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1> ArtConnect</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="events.html">Events</a>
+        <a href="submit.html">Artist Submission</a>
+        <a href="faq.html">FAQ</a>
+        <a href="references.html">References</a>
+    </nav>
+
+    <select id="category">
+        <option value="All">All</option>
+        <option value="Photography">Photography</option>
+        <option value="Artwork">Artwork</option>
+    </select>
+
+    <section class="artwork" data-category="Artwork">
+        <section>
+            <h2>Artwork Title: 秉燭夜遊</h2>
+
+            <img src="images/artwork1.png" alt="Artwork1">
+
+            <p>Artist Name: Ma Lin</p>
+            <p>Category: Artwork</p>
+            <p>Price: "Not For Sale"</p>
+        </section>
+
+        <section>
+            <h2>Artwork Title: Napoleon I on his Imperial Throne </h2>
+
+            <img src="images/artwork2.png" alt="Artwork2">
+
+            <p>Artist Name: Jean-Auguste-Dominique Ingres</p>
+            <p>Category: Artwork</p>
+            <p>Price: "Not For Sale"</p>
+        </section>
+
+        <section>
+            <h2>Artwork Title: The Great Wave off Kanagawa</h2>
+
+            <img src="images/artwork3.png" alt="Artwork3">
+
+            <p>Artist Name: Katsushika Hokusai</p>
+            <p>Category: Artwork</p>
+            <p>Price: "Not For Sale"</p>
+        </section>
+    </section>
+
+    <section class="artwork" data-category="Photography">
+        <section>
+            <h2>Artwork Title: Boulevard du Temple by Daguerre</h2>
+
+            <img src="images/photo1.png" alt="Photo1">
+
+            <p>Artist Name: Louis Daguerre</p>
+            <p>Category: Photography</p>
+            <p>Price: "Not For Sale"</p>
+        </section>
+
+        <section>
+            <h2>Artwork Title: 1838 or 1839 Frauenkirche Munich</h2>
+
+            <img src="images/photo2.png" alt="Photo2">
+
+            <p>Artist Name: Carl August von Steinheil</p>
+            <p>Category: Photography</p>
+            <p>Price: "Not For Sale"</p>
+        </section>
+
+        <section>
+         <h2>Artwork Title: Colonel William Willoughby Verner</h2>
+
+         <img src="images/photo3.png" alt="Photo3">
+
+            <p>Artist Name: Sarah Angelina Acland</p>
+            <p>Category: Photography</p>
+            <p>Price: "Not For Sale"</p>
+        </section>
+    </section>
+
+    <script>
+        const categorySelect = document.getElementById("category");
+        const artworks = document.querySelectorAll(".artwork");
+
+        categorySelect.addEventListener("change", function () {
+            const selectedCategory = this.value;
+
+            artworks.forEach(function (artwork) {
+                if (selectedCategory === "All" ||
+                    artwork.dataset.category === selectedCategory) {
+                    artwork.style.display = "block";
+                } else {
+                        artwork.style.display = "none";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
