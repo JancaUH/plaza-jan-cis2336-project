@@ -5,66 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>ArtConnect - Home</title>
+    <title>ArtConnect - Submission Form</title>
 
     <link rel="stylesheet" href="css/style.css">
 </head>
-
-<script>
-    document.getElementById("submissionForm").addEventListener("submit", function(event) {
-
-        document.querySelectorAll(".error").forEach(function(error){
-            error.textContent = "";
-        });
-
-        let valid = true;
-
-        let name = document.getElementById("name").value.trim();
-        let email = document.getElementById("email").value.trim();
-        let title = document.getElementById("title").value.trim();
-        let price = document.getElementById("price").value.trim();
-        let description = document.getElementById("description").value.trim();
-
-        if (name === "") {
-            document.getElementById("nameError").textContent = "Artist name is required.";
-            valid = false;
-        }
-
-        if (title === "") {
-            document.getElementById("titleError").textContent = "Artwork title is required.";
-            valid = false;
-        }
-
-        if (description === "") {
-            document.getElementById("descriptionError").textContent = "Description is required.";
-            valid = false;
-        }
-
-        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (email === "") {
-            document.getElementById("emailError").textContent = "Email is required.";
-            valid = false;
-        } else if (!emailPattern.test(email)) {
-            document.getElementById("emailError").textContent = "Enter a valid email address.";
-            valid = false;
-        }
-
-        if (price === "") {
-            document.getElementById("priceError").textContent = "Price is required.";
-            valid = false;
-        } else if (isNaN(price)) {
-            document.getElementById("priceError").textContent = "Price must be a number.";
-            valid = false;
-        }
-
-        if (valid) {
-            alert("Artwork submitted successfully!");
-            document.getElementById("submissionForm").reset();
-        }
-
-    });
-</script>
 
 <body>
     <header>
@@ -98,13 +42,12 @@
             <span class="error" id="titleError"></span><br>
 
             <label for="title">Category:</label><br>
-            <input type="radio" id="photography" name="category" value="photography">
+            <input type="radio" id="photography" name="category" value="Photography">
             <label for="html">Photography</label><br>
-            <input type="radio" id="artwork" name="category" value="artwork">
-            <label for="css">Artwork</label><br>
+            <input type="radio" id="artworkCategory" name="category" value="Artwork">
+            <label for="artworkCategory">Artwork</label><br>
 
-        
-            
+    
             <label for="title">Price:</label>
             <input type="text" id="price" name="price" required>
             <span class="error" id="priceError"></span><br>
@@ -120,4 +63,118 @@
         </form>
     </section>
 </body>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const form = document.getElementById('submissionForm');
+
+    if (!form) {
+        console.error('Could not find submissionForm');
+        return;
+    }
+
+    form.addEventListener('submit', async function (event) {
+
+        event.preventDefault();
+
+        console.log('Form submission started');
+
+        document.querySelectorAll('.error').forEach(function (error) {
+            error.textContent = '';
+        });
+
+        let valid = true;
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const title = document.getElementById('title').value.trim();
+        const price = document.getElementById('price').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const artworkFile = document.getElementById('artwork').files[0];
+
+        if (name === '') {
+            document.getElementById('nameError').textContent =
+                'Artist name is required.';
+            valid = false;
+        }
+
+        if (title === '') {
+            document.getElementById('titleError').textContent =
+                'Artwork title is required.';
+            valid = false;
+        }
+
+        if (description === '') {
+            document.getElementById('descriptionError').textContent =
+                'Description is required.';
+            valid = false;
+        }
+
+        if (email === '') {
+            document.getElementById('emailError').textContent =
+                'Email is required.';
+            valid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            document.getElementById('emailError').textContent =
+                'Enter a valid email address.';
+            valid = false;
+        }
+
+        if (price === '') {
+            document.getElementById('priceError').textContent =
+                'Price is required.';
+            valid = false;
+        } else if (isNaN(price)) {
+            document.getElementById('priceError').textContent =
+                'Price must be a number.';
+            valid = false;
+        }
+
+        if (!artworkFile) {
+            alert('Please select an artwork image.');
+            valid = false;
+        }
+
+        if (!valid) {
+            return;
+        }
+
+        try {
+
+            const formData = new FormData(form);
+
+            console.log('Sending artwork to backend...');
+
+            const response = await fetch('/api/artworks', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            console.log('Backend response:', result);
+
+            if (response.ok) {
+
+                alert('Artwork submitted successfully!');
+
+                form.reset();
+
+            } else {
+
+                alert(result.message || 'Submission failed.');
+
+            }
+
+        } catch (err) {
+
+            console.error('Submission error:', err);
+
+            alert('An error occurred while submitting.');
+
+        }
+    });
+});
+</script>
 </html>>

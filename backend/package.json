@@ -1,0 +1,25 @@
+{
+  "name": "plaza-jan-cis2336-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YOURUSERNAME/lastname-firstname-cis2336-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/YOURUSERNAME/lastname-firstname-cis2336-project/issues"
+  },
+  "homepage": "https://github.com/YOURUSERNAME/lastname-firstname-cis2336-project#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "multer": "^2.2.0"
+  }
+}

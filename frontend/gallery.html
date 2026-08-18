@@ -4,15 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>ArtConnect - Home</title>
+
+    <title>ArtConnect - Gallery</title>
 
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+
     <header>
-        <h1> ArtConnect</h1>
+        <h1>ArtConnect</h1>
     </header>
 
     <nav>
@@ -24,92 +25,187 @@
         <a href="references.html">References</a>
     </nav>
 
-    <select id="category">
-        <option value="All">All</option>
-        <option value="Photography">Photography</option>
-        <option value="Artwork">Artwork</option>
-    </select>
+    <section>
+        <h2>Gallery</h2>
 
-    <section class="artwork" data-category="Artwork">
-        <section>
-            <h2>Artwork Title: 秉燭夜遊</h2>
+        <label for="category">Filter by Category:</label>
 
-            <img src="images/artwork1.png" alt="Artwork1">
-
-            <p>Artist Name: Ma Lin</p>
-            <p>Category: Artwork</p>
-            <p>Price: "Not For Sale"</p>
-        </section>
-
-        <section>
-            <h2>Artwork Title: Napoleon I on his Imperial Throne </h2>
-
-            <img src="images/artwork2.png" alt="Artwork2">
-
-            <p>Artist Name: Jean-Auguste-Dominique Ingres</p>
-            <p>Category: Artwork</p>
-            <p>Price: "Not For Sale"</p>
-        </section>
-
-        <section>
-            <h2>Artwork Title: The Great Wave off Kanagawa</h2>
-
-            <img src="images/artwork3.png" alt="Artwork3">
-
-            <p>Artist Name: Katsushika Hokusai</p>
-            <p>Category: Artwork</p>
-            <p>Price: "Not For Sale"</p>
-        </section>
+        <select id="category">
+            <option value="All">All</option>
+            <option value="Photography">Photography</option>
+            <option value="Artwork">Artwork</option>
+        </select>
     </section>
 
-    <section class="artwork" data-category="Photography">
-        <section>
-            <h2>Artwork Title: Boulevard du Temple by Daguerre</h2>
 
-            <img src="images/photo1.png" alt="Photo1">
+    <section>
+        <div id="galleryContainer">
 
-            <p>Artist Name: Louis Daguerre</p>
-            <p>Category: Photography</p>
-            <p>Price: "Not For Sale"</p>
-        </section>
+            <div class="artwork-card" data-category="Artwork">
 
-        <section>
-            <h2>Artwork Title: 1838 or 1839 Frauenkirche Munich</h2>
+                <h2>Artwork Title: 秉燭夜遊</h2>
 
-            <img src="images/photo2.png" alt="Photo2">
+                <img src="images/artwork1.png" alt="秉燭夜遊">
 
-            <p>Artist Name: Carl August von Steinheil</p>
-            <p>Category: Photography</p>
-            <p>Price: "Not For Sale"</p>
-        </section>
+                <p>Artist Name: Ma Lin</p>
+                <p>Category: Artwork</p>
+                <p>Price: Not For Sale</p>
 
-        <section>
-         <h2>Artwork Title: Colonel William Willoughby Verner</h2>
+            </div>
 
-         <img src="images/photo3.png" alt="Photo3">
+            <div class="artwork-card" data-category="Artwork">
 
-            <p>Artist Name: Sarah Angelina Acland</p>
-            <p>Category: Photography</p>
-            <p>Price: "Not For Sale"</p>
-        </section>
+                <h2>Artwork Title: Napoleon I on his Imperial Throne</h2>
+
+                <img src="images/artwork2.png"
+                     alt="Napoleon I on his Imperial Throne">
+
+                <p>Artist Name: Jean-Auguste-Dominique Ingres</p>
+                <p>Category: Artwork</p>
+                <p>Price: Not For Sale</p>
+
+            </div>
+
+            <div class="artwork-card" data-category="Artwork">
+
+                <h2>Artwork Title: The Great Wave off Kanagawa</h2>
+
+                <img src="images/artwork3.png"
+                     alt="The Great Wave off Kanagawa">
+
+                <p>Artist Name: Katsushika Hokusai</p>
+                <p>Category: Artwork</p>
+                <p>Price: Not For Sale</p>
+
+            </div>
+
+            <div class="artwork-card" data-category="Photography">
+
+                <h2>Artwork Title: Boulevard du Temple by Daguerre</h2>
+
+                <img src="images/photo1.png"
+                     alt="Boulevard du Temple by Daguerre">
+
+                <p>Artist Name: Louis Daguerre</p>
+                <p>Category: Photography</p>
+                <p>Price: Not For Sale</p>
+
+            </div>
+
+            <div class="artwork-card" data-category="Photography">
+
+                <h2>Artwork Title: 1838 or 1839 Frauenkirche Munich</h2>
+
+                <img src="images/photo2.png"
+                     alt="Frauenkirche Munich">
+
+                <p>Artist Name: Carl August von Steinheil</p>
+                <p>Category: Photography</p>
+                <p>Price: Not For Sale</p>
+
+            </div>
+
+            <div class="artwork-card" data-category="Photography">
+
+                <h2>Artwork Title: Colonel William Willoughby Verner</h2>
+
+                <img src="images/photo3.png"
+                     alt="Colonel William Willoughby Verner">
+
+                <p>Artist Name: Sarah Angelina Acland</p>
+                <p>Category: Photography</p>
+                <p>Price: Not For Sale</p>
+
+            </div>
+
+        </div>
     </section>
+
 
     <script>
+
         const categorySelect = document.getElementById("category");
-        const artworks = document.querySelectorAll(".artwork");
+        const galleryContainer = document.getElementById("galleryContainer");
 
-        categorySelect.addEventListener("change", function () {
-            const selectedCategory = this.value;
-
-            artworks.forEach(function (artwork) {
-                if (selectedCategory === "All" ||
-                    artwork.dataset.category === selectedCategory) {
-                    artwork.style.display = "block";
-                } else {
-                        artwork.style.display = "none";
+        async function loadSubmittedArtworks() {
+            try {
+                const response = await fetch('/api/artworks');
+                if (!response.ok) {
+                    throw new Error('Could not load artworks.');
                 }
-            });
-        });
+
+                const data = await response.json();
+
+                data.artworks.forEach(function (artwork) {
+
+                    const card = document.createElement('div');
+
+                    card.className = 'artwork-card';
+
+                    card.dataset.category = artwork.category || '';
+
+                    card.innerHTML = `
+
+                        <h2>Artwork Title: ${artwork.title}</h2>
+                        ${
+                            artwork.filename
+                            ? `<img src="/uploads/${artwork.filename}"
+                                   alt="${artwork.title}">`
+                            : ''
+                        }
+                        <p>Artist Name: ${artwork.name}</p>
+                        <p>
+                            Category:
+                            ${artwork.category || 'Not specified'}
+                        </p>
+                        <p>
+                            Price: $${artwork.price}
+                        </p>
+                        <p>
+                            Description: ${artwork.description}
+                        </p>
+                    `;
+                    galleryContainer.appendChild(card);
+
+                });
+                setupCategoryFilter();
+            } catch (error) {
+                console.error(
+                    'Error loading submitted artwork:',
+                    error
+                );
+            }
+        }
+
+        function setupCategoryFilter() {
+            categorySelect.addEventListener(
+                "change",
+                function () {
+
+                    const selectedCategory = this.value;
+
+                    const artworks =
+                        document.querySelectorAll(".artwork-card");
+
+
+                    artworks.forEach(function (artwork) {
+
+                        if (
+                            selectedCategory === "All" ||
+                            artwork.dataset.category === selectedCategory
+                        ) {
+                            artwork.style.display = "block";
+                        } else {
+                            artwork.style.display = "none";
+                        }
+
+                    });
+
+                }
+            );
+        }
+        loadSubmittedArtworks();
     </script>
+
 </body>
 </html>
