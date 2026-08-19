@@ -10,6 +10,8 @@ This is one of my first times using GitHub so I ran into the rouble of moving st
 
 For the longest I couldn't figure out why my node server.js would not load but after checking online I saw that I was in the wrong folder (Not in backend)
 
+I also accidentally deleted the .git file which led to an entire rabbit hole of learning how to fix that, but I'm glad I did since now I feel more confident using GitHub in VSCode
+
 ## How to download
 
 Clone repository using the link submitted on Canvas
